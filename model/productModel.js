@@ -22,7 +22,7 @@ const productSchema = new Schema({
         type : String,
         enum : ["available","unavailable"]
     },
-    
+    productImage : String
 },{
     timestamps : true
 })
