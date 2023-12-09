@@ -4,6 +4,7 @@ const app = express()
 
 //routes
 const authRoute = require("./routes/auth/authRoute")
+const productRoute = require("./routes/productRoute")
 
 require('dotenv').config()
 //database connection
@@ -20,7 +21,8 @@ app.get("/",(req,res)=>{
     })
 })
 
-app.use("", authRoute)
+app.use("api", authRoute)
+app.use("api",productRoute)
 
 
 
