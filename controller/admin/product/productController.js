@@ -15,7 +15,7 @@ exports.createProduct = async (req,res)=>{
         })
     }
 
-    Product.create({
+    await Product.create({
         productName,
         productDescription,
         productStockQty,
@@ -27,4 +27,41 @@ exports.createProduct = async (req,res)=>{
     res.status(200).json({
         message : "Product Created sucessfully"
     })
+}
+
+exports.getProducts = async(req,res)=>{
+    const products = await Product.find()
+    if(products.length == 0){
+        res.status(400).json({
+            message : "No products found",
+            products : []
+        })
+    }else{
+        res.status(200).json({
+            message : "Product Fetched sucessfully",
+            products
+        })
+    }
+}
+
+exports.getProduct = async(req,res)=>{
+    const{id} = req.params
+    if(!id){
+        res.status(400).json({
+            message : "Please provide id(productid)"
+        })
+    }
+
+    const product = await Product.find({_id : id})
+    if(product.length == 0){
+        res.status(400).json({
+            message : "No product found with that id",
+            product : []
+        })
+    }else{
+        res.status(200).json({
+            message : "single Product fetched sucessfully",
+            product
+        })
+    }
 }

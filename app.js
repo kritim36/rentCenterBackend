@@ -21,8 +21,8 @@ app.get("/",(req,res)=>{
     })
 })
 
-app.use("api", authRoute)
-app.use("api",productRoute)
+app.use("/api", authRoute)
+app.use("/api",productRoute)
 
 
 
