@@ -5,6 +5,7 @@ const app = express()
 //routes
 const authRoute = require("./routes/auth/authRoute")
 const productRoute = require("./routes/productRoute")
+const adminUserRoute = require("./routes/adminUsersRoute")
 
 require('dotenv').config()
 //database connection
@@ -13,6 +14,8 @@ connectDatabase(process.env.MONGO_URI)
 app.use(express.json())
 app.use(express.urlencoded ({extended : true}))
 
+// telling nodejs to give access to uploads folder 
+app.use(express.static("./uploads"))
 
 //test api
 app.get("/",(req,res)=>{
@@ -23,6 +26,7 @@ app.get("/",(req,res)=>{
 
 app.use("/api", authRoute)
 app.use("/api",productRoute)
+app.use("/api", adminUserRoute)
 
 
 

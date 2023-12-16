@@ -18,7 +18,9 @@ const userSchema = new Schema({
     },
     userPassword : {
         type : String,
-        required : [true, 'userPassword must be provided']
+        required : [true, 'userPassword must be provided'],
+        minlength : 8,
+        select : false
     },
     role : {
         type : String,
@@ -26,11 +28,13 @@ const userSchema = new Schema({
         default : "customer"
     },
     otp : {
-        type : Number
+        type : Number,
+        select : false
     },
     isOtpVerified : {
         type : Boolean,
-        default : false
+        default : false,
+        select : false
     }
 },{
     timestamps : true
