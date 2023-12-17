@@ -6,6 +6,7 @@ const app = express()
 const authRoute = require("./routes/auth/authRoute")
 const productRoute = require("./routes/productRoute")
 const adminUserRoute = require("./routes/adminUsersRoute")
+const userReview = require("./routes/userReviewRoute")
 
 require('dotenv').config()
 //database connection
@@ -27,6 +28,7 @@ app.get("/",(req,res)=>{
 app.use("/api", authRoute)
 app.use("/api",productRoute)
 app.use("/api", adminUserRoute)
+app.use("./api", userReview)
 
 
 
