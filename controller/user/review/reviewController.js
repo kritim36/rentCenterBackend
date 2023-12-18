@@ -30,27 +30,8 @@ exports.createReview = async(req,res)=>{
     })
 }
 
-exports.getReview = async(req,res)=>{
-    const productId = req.params.id
-    if(!productId){
-        return res.status(400).json({
-            message : "please provide productId"
-        })
-    }
-    const productExist = await Product.findById(productId)
-    if(!productExist){
-        return res.status(400).json({
-            message : "Product with that id doesnot exist"
-        })
-    }
-    const reviews = await Review.find({productId})
-    res.status(200).json({
-        message : "review fetched sucessfully",
-        data : reviews
-    })
-}
 
-/*exports.getMyReviews = async(req,res)=>{
+exports.getMyReviews = async(req,res)=>{
     const userId = req.user.id  
     const reviews = await Review.find({userId})
     if(reviews.length == 0 ){
@@ -64,7 +45,7 @@ exports.getReview = async(req,res)=>{
            data :  reviews
         })
     }
-}*/
+}
 
 exports.deleteReview = async(req,res)=>{
     const reviewId   = req.params.id 
