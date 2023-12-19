@@ -8,6 +8,7 @@ const productRoute = require("./routes/admin/productRoute")
 const adminUserRoute = require("./routes/admin/adminUsersRoute")
 const userReview = require("./routes/user/userReviewRoute")
 const profileRoute = require("./routes/user/profileRoute")
+const cartRoute = require("./routes/user/cartRoute")
 
 require('dotenv').config()
 //database connection
@@ -31,6 +32,7 @@ app.use("/api/product",productRoute)
 app.use("/api/admin", adminUserRoute)
 app.use("/api/reviews", userReview)
 app.use("/api/profile", profileRoute)
+app.use("/api/cart", cartRoute)
 
 
 
