@@ -6,9 +6,11 @@ const app = express()
 const authRoute = require("./routes/auth/authRoute")
 const productRoute = require("./routes/admin/productRoute")
 const adminUserRoute = require("./routes/admin/adminUsersRoute")
+const adminOrderRoute = require("./routes/admin/adminOrderRoute")
 const userReview = require("./routes/user/userReviewRoute")
 const profileRoute = require("./routes/user/profileRoute")
 const cartRoute = require("./routes/user/cartRoute")
+const orderRoute = require("./routes/user/orderRoute")
 
 require('dotenv').config()
 //database connection
@@ -30,9 +32,11 @@ app.get("/",(req,res)=>{
 app.use("/api/auth", authRoute)
 app.use("/api/product",productRoute)
 app.use("/api/admin", adminUserRoute)
+app.use("/api/admin", adminOrderRoute)
 app.use("/api/reviews", userReview)
 app.use("/api/profile", profileRoute)
 app.use("/api/cart", cartRoute)
+app.use("/api/orders", orderRoute)
 
 
 
