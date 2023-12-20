@@ -53,3 +53,26 @@ exports.deleteItemFromMyCart = async(req,res)=>{
         message : "Item deleted from cart"
     })
 }
+
+exports.updateCartItems = async(req,res)=>{
+    const userId = req.user.id
+    const {productId} = req.params 
+    const {quantity} = req.body 
+
+    const user = await User.findById(userId)
+    console.log(user)
+    const cartItem = user.cart.find((item)=>item.product.equals(productId))
+    if(!cartItem){
+        return res.status(404).json({
+            message : "No item with that Id"
+        })
+    }
+
+    cartItem.quantity = quantity ;
+    await user.save()
+
+    res.status(200).json({
+        message : "Item updated successfully",
+        data : user.cart
+    })
+}

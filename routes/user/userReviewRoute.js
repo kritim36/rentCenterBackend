@@ -6,12 +6,11 @@ const catchAsync = require("../../services/catchAsync")
 
 const router = require("express").Router()
 
-router.route('/:id')
-.post(isAuthenticated, catchAsync(createReview))
-.delete(isAuthenticated, catchAsync(deleteReview))
-
 router.route('/')
 .get(isAuthenticated, catchAsync(getMyReviews))
 
+router.route('/:id')
+.post(isAuthenticated,restrictTo("user"), catchAsync(createReview))
+.delete(isAuthenticated, catchAsync(deleteReview))
 
 module.exports = router
