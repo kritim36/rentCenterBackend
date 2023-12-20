@@ -11,6 +11,7 @@ const userReviewRoute = require("./routes/user/userReviewRoute")
 const profileRoute = require("./routes/user/profileRoute")
 const cartRoute = require("./routes/user/cartRoute")
 const orderRoute = require("./routes/user/orderRoute")
+const paymentRoute = require("./routes/user/paymentRoute")
 
 require('dotenv').config()
 //database connection
@@ -37,6 +38,7 @@ app.use("/api/reviews", userReviewRoute)
 app.use("/api/profile", profileRoute)
 app.use("/api/cart", cartRoute)
 app.use("/api/orders", orderRoute)
+app.use("/api/payment",paymentRoute)
 
 
 
