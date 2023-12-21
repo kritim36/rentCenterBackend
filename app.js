@@ -2,6 +2,10 @@ const express = require("express")
 const { connectDatabase } = require("./database/database")
 const app = express()
 
+const {Server} = require("socket.io")
+
+app.set('view engine','ejs')
+
 //routes
 const authRoute = require("./routes/auth/authRoute")
 const productRoute = require("./routes/admin/productRoute")
@@ -19,6 +23,10 @@ connectDatabase(process.env.MONGO_URI)
 
 app.use(express.json())
 app.use(express.urlencoded ({extended : true}))
+
+app.get('/chat',(req,res)=>{
+    res.render("home.ejs")
+})
 
 // telling nodejs to give access to uploads folder 
 app.use(express.static("./uploads"))
@@ -44,6 +52,17 @@ app.use("/api/payment",paymentRoute)
 
 const PORT = process.env.PORT
 //listen
-app.listen(3000,()=>{
+const server = app.listen(3000,()=>{
     console.log(`Server has started at ${PORT}`)
 })
+const io = new Server(server)
+
+/*io.on("connection",(socket)=>{
+    console.log("A user connected")
+})*/
+
+function getSocketIo(){
+    return io 
+}
+
+module.exports.getSocketIo = getSocketIo

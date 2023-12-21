@@ -29,6 +29,8 @@ exports.initiateKhaltiPayment = async(req,res)=>{
 }
 
 exports.verifyPidx = async(req,res)=>{
+    const app = require('./../../../app')
+    const io = app.getSocketIo
     const pidx = req.query.pidx
     const response = await axios.post("https://a.khalti.com/api/v2/epayment/lookup/",{pidx},{
         headers : {
@@ -43,9 +45,21 @@ exports.verifyPidx = async(req,res)=>{
         order[0].paymentDetails.method = 'khalti'
         order[0].paymentDetails.status = 'paid'
         await order[0].save()
+
+        //get the socket.id of requesting user
+        io.on("connection",(socket)=>{
+            io.to(socket.id).emit("payment",{message : "Payment Successfully"})
+        })
+        
         //notify to frontend
-        res.redirect("http://localhost:3000")
+        io.emit("payment",{message : "Payment Sucessfully"})
+        //res.redirect("http://localhost:3000")
+    
     }else{
+        //notify error to frontend
+        io.on("connection",(socket)=>{
+            io.to(socket.id).emit("payment",{message : "Payment Failure"})
+        })
         //notify error to frontend
         res.redirect("http://localhost:3000/errorPage")
     }
