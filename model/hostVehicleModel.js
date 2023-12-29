@@ -25,7 +25,7 @@ const hostVehicleSchema = new Schema({
     },
     approved : {
         type : Boolean,
-        default : false
+        default : false        
     }
 
 })
