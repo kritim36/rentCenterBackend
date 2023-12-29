@@ -18,7 +18,7 @@ exports.registerUser = async (req,res)=>{
     }
 
 
-    await User.create({
+    const userData = await User.create({
         userEmail : email,
         userName : userName,
         userPhoneNumber : phoneNumber,
@@ -26,7 +26,8 @@ exports.registerUser = async (req,res)=>{
     })
 
     res.status(201).json({
-        message : "User registered sucessfully"
+        message : "User registered sucessfully",
+        data : userData
     })
 }
 
@@ -53,7 +54,7 @@ exports.loginUser = async(req,res)=>{
            })
            res.status(200).json({
             message : "Login sucessfully",
-            data : token
+            token : token
            })
     }else{
         res.status(404).json({
@@ -106,7 +107,7 @@ exports.verifyOtp = async (req,res)=>{
         })
     }
     if(userExist[0].otp !== otp){
-        res.status(400).json({
+         res.status(400).json({
             message : "Invalid otp"
         })
     }else{

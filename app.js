@@ -3,6 +3,7 @@ const { connectDatabase } = require("./database/database")
 const app = express()
 
 const {Server} = require("socket.io")
+const cors = require("cors")
 
 app.set('view engine','ejs')
 
@@ -16,6 +17,10 @@ const profileRoute = require("./routes/user/profileRoute")
 const cartRoute = require("./routes/user/cartRoute")
 const orderRoute = require("./routes/user/orderRoute")
 const paymentRoute = require("./routes/user/paymentRoute")
+
+app.use(cors({
+    origin : '*'
+}))
 
 require('dotenv').config()
 //database connection
