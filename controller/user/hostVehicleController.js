@@ -1,5 +1,5 @@
-const HostVehicle = require("../model/hostVehicleModel");
-const User = require("../model/userModel");
+const HostVehicle = require("../../model/hostVehicleModel");
+const User = require("../../model/userModel");
 
 exports.hostVehicle = async(req,res)=>{
     const userId = req.user.id
@@ -17,12 +17,13 @@ exports.hostVehicle = async(req,res)=>{
         })
     }
 
-    const newVehicle = new HostVehicle({
+    const newVehicle = await HostVehicle.create({
         ownerName,
         registrationNumber,
         model,
         manufacturer,
-        hostedBy: userId,
+        hostedBy : userId,
+        approved : false
       })
 
     res.status(200).json({
