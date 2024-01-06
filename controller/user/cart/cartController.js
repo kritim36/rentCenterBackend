@@ -16,17 +16,28 @@ exports.addToCart = async(req,res)=>{
         })
     }
     const user = await User.findById(userId)
-    user.cart.push(productId)
+    //check if the productId already exist or not, if exist increase the quantity of product else add the product to cart
+    const existingCartItem = user.cart.find((item)=>item.product.equals(productId))
+    if(existingCartItem){
+        existingCartItem.quantity += 1;
+    }else{
+        user.cart.push({
+            product : productId,
+            quantity : 1
+        })
+    }
     await user.save()
+    const updatedUser = await User.findById(userId).populate('cart.product')
     res.status(200).json({
-        message : "Product added to cart"
+        message : "Product added to cart",
+        data : updatedUser.cart
     })
 }
 
 exports.getMyCartItems = async(req,res)=>{
     const userId = req.user.id
     const userData = await User.findById(userId).populate({
-        path : "cart",
+        path : "cart.product",
         select : "-productStatus"
     })
 
