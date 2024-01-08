@@ -58,7 +58,7 @@ exports.deleteItemFromMyCart = async(req,res)=>{
     }
     //get user cart
     const user = await User.findById(userId)
-    user.cart = user.cart.filter((pId)=>pId != productId) // [1,2,3] ==> 2 ==>fiter ==> [1,3] ==> user.cart = [1,3]
+    user.cart = user.cart.filter(item=> item.product != productId) // [1,2,3] ==> 2 ==>fiter ==> [1,3] ==> user.cart = [1,3]
     await user.save()
     res.status(200).json({
         message : "Item deleted from cart"
