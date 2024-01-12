@@ -29,9 +29,9 @@ connectDatabase(process.env.MONGO_URI)
 app.use(express.json())
 app.use(express.urlencoded ({extended : true}))
 
-app.get('/chat',(req,res)=>{
-    res.render("home.ejs")
-})
+// app.get('/chat',(req,res)=>{
+//     res.render("home.ejs")
+// })
 
 // telling nodejs to give access to uploads folder 
 app.use(express.static("./uploads"))

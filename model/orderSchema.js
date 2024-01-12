@@ -39,7 +39,7 @@ const orderSchema = new Schema ({
         pidx : {type : String},
        method : {
         type : String,
-        enum : ['COD', 'khalti']
+        enum : ['COD', 'Khalti']
        },
        status : {
         type : String,

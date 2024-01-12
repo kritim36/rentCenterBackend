@@ -54,11 +54,12 @@ exports.verifyPidx = async(req,res)=>{
 
     }
    })
+   
    if(response.data.status == 'Completed'){
     // modification in datbase
    let order = await Order.find({'paymentDetails.pidx' : pidx})
    
-   order[0].paymentDetails.method = 'khalti'
+   order[0].paymentDetails.method = 'Khalti'
    order[0].paymentDetails.status = "paid"
    await order[0].save()
     // empty user cart
