@@ -25,7 +25,7 @@ if(order.totalAmount !== amount){
     const data = {
         return_url : "http://localhost:5173/success",
         purchase_order_id : orderId,
-        amount : amount * 100,
+        amount : amount*100,
         website_url : "http://localhost:3000/",
         purchase_order_name : "orderName_" + orderId
     }
