@@ -95,7 +95,7 @@ exports.deleteMyOrder = async(req,res)=>{
             message : "No order with that id"
         })
     }
-    if(order.user !== userId){
+    if(order.user != userId){
         return res.status(400).json({
             message : "You don't have permission to delete this order"
         })
@@ -125,7 +125,7 @@ exports.cancelOrder = async(req,res)=>{
             message : "No order with that id"
         })
     }
-    if(order.user !== userId){
+    if(order.user != userId){
        return res.status(400).json({
         message : "You don't have permission to delete this order"
        })
