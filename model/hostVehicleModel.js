@@ -18,6 +18,9 @@ const hostVehicleSchema = new Schema({
         type : String,
         required : true
     },
+    image : {
+        type : String
+    },
     hostedBy : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "User",
