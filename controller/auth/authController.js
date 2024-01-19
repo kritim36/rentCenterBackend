@@ -13,7 +13,8 @@ exports.registerUser = async (req,res)=>{
     const userFound = await User.find({userEmail : email})
     if(userFound.length > 0 ){
       return  res.status(400).json({
-            message : "User with that email already registered"
+            message : "User with that email already registered",
+            data : []
         })
     }
 
@@ -73,7 +74,7 @@ exports.forgetPassword = async(req,res)=>{
     }
     const userExist = await User.find({userEmail : email})
     if(userExist.length == 0){
-        res.status(400).json({
+        return res.status(400).json({
             message : "User with that email is not registered"
         })
     }
@@ -88,7 +89,8 @@ exports.forgetPassword = async(req,res)=>{
         message : `Your otp is ${otp} . Dont share with anyone`
     })
     res.status(200).json({
-        message : "OTP sent successfully"
+        message : "OTP sent successfully",
+        data : email
     })
   
 }
@@ -101,13 +103,13 @@ exports.verifyOtp = async (req,res)=>{
         })
     }
 
-    const userExist = await User.find({userEmail : email})
+    const userExist = await User.find({userEmail : email}).select("+otp +isOtpVerified")
     if(userExist.length == 0){
         return res.status(400).json({
             message : "Email is not registered"
         })
     }
-    if(userExist[0].otp !== otp){
+    if(userExist[0].otp !== otp*1){
          res.status(400).json({
             message : "Invalid otp"
         })
@@ -135,7 +137,7 @@ exports.resetPassword = async (req,res)=>{
         })
     }
 
-    const userExist = await User.find({userEmail : email})
+    const userExist = await User.find({userEmail : email}).select("+isOtpVerified")
     if(userExist.length == 0){
         return res.status(400).json({
             message : "Email is not registered"

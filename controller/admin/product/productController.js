@@ -1,3 +1,4 @@
+const Order = require("../../../model/orderSchema")
 const Product = require("../../../model/productModel")
 const fs = require("fs")
 
@@ -9,14 +10,16 @@ exports.createProduct = async (req,res)=>{
     }else{
         filePath = req.file.filename
     }
-    const{productName,productDescription,productStockQty,productStatus,productPrice} = req.body
-    if(!productName || !productDescription || !productStockQty || !productStatus || !productPrice){
+    const{productBrand,productCategory,productName,productDescription,productStockQty,productStatus,productPrice} = req.body
+    if(!productBrand || !productCategory ||!productName || !productDescription || !productStockQty || !productStatus || !productPrice){
     return res.status(400).json({
-            message : "Please provide productName, productDescription, productStockQty, productStatus, productPrice"
+            message : "Please provide productBrand, productCategory, productName, productDescription, productStockQty, productStatus, productPrice"
         })
     }
 
     const productCreated = await Product.create({
+        productBrand,
+        productCategory,
         productName,
         productDescription,
         productStockQty,
@@ -34,8 +37,8 @@ exports.createProduct = async (req,res)=>{
 
 exports.editProduct = async(req,res)=>{
     const{id} = req.params
-    const{productName,productDescription,productStockQty,productStatus,productPrice} = req.body
-    if(!productName || !productDescription || !productStockQty || !productStatus || !productPrice || !id){
+    const{productBrand,productCategory,productName,productDescription,productStockQty,productStatus,productPrice} = req.body
+    if(!productBrand || !productCategory || !productName || !productDescription || !productStockQty || !productStatus || !productPrice || !id){
     return res.status(400).json({
             message : "Please provide productName, productDescription, productStockQty, productStatus, productPrice, id"
         })
@@ -63,6 +66,8 @@ exports.editProduct = async(req,res)=>{
             })
     }
     const datas =  await Product.findByIdAndUpdate(id,{
+        productBrand,
+        productCategory,
         productName ,
         productDescription ,
         productPrice,
@@ -137,8 +142,7 @@ exports.updateProductStatus = async(req,res)=>{
     })
 }
 
-exports.updateProductStockAndPrice =  
-async(req,res)=>{
+exports.updateProductStockAndPrice =  async(req,res)=>{
     const {id} = req.params 
     const {productStockQty,productPrice} = req.body 
 

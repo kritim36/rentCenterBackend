@@ -48,7 +48,26 @@ exports.updateOrderStatus = async(req,res)=>{
     }
     const updatedOrder = await Order.findByIdAndUpdate(id,{
         orderStatus
-    },{new:true})
+    },{new:true}).populate({
+        path:"items.product",
+        model : "Product"
+    }).populate('user')
+let necessaryData
+    if(orderStatus === "delivered"){
+         necessaryData = updatedOrder.items.map((item)=>{
+            return {
+                quantity : item.quantity,
+                productId : item.product._id,
+                productStockQty : item.product.productStockQty
+            }
+        })
+
+        for(var i = 0 ; i < necessaryData.length; i ++){
+            await Product.findByIdAndUpdate(necessaryData[i].productId,{
+                productStockQty : necessaryData[i].productStockQty - necessaryData[i].quantity
+            })
+        }
+    }
 
     res.status(200).json({
         message : "Order status updated Successfully",
@@ -68,5 +87,33 @@ exports.deleteOrder = async(req,res)=>{
     res.status(200).json({
         message : "Order deleted successfully",
         data : null
+    })
+}
+
+exports.updatePaymentStatus = async(req,res)=>{
+    const {id} = req.params 
+    const {paymentStatus} = req.body 
+
+    if(!paymentStatus || !['pending','unpaid','paid'].includes(paymentStatus.toLowerCase())){
+        return res.status(400).json({
+            message : "paymentStatus is invalid or should be provided"
+        })
+    }
+    const order= await Order.findById(id)
+    if(!order){
+        return res.status(404).json({
+            message : "No order found with that id"
+        })
+    }
+    const updatedOrder = await Order.findByIdAndUpdate(id,{
+        'paymentDetails.status' : paymentStatus
+    },{new:true}).populate({
+        path:"items.product",
+        model : "Product"
+    }).populate('user')
+
+    res.status(200).json({
+        message : "Order status updated Successfully",
+        data : updatedOrder
     })
 }

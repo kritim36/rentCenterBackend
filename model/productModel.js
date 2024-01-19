@@ -2,6 +2,15 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const productSchema = new Schema({
+    productBrand : {
+        type : String,
+        enum : ["Vivo","Samsung","Dell","HP","Canon","Nikon","Mercedes","Toyota","Honda","Hero"]
+
+    },
+    productCategory : {
+        type : String,
+        enum : ["Mobile","Laptop","Camera","Cars","Bike"]
+    },
     productName : {
         type : String,
         required : [true, "productName must be provided"]

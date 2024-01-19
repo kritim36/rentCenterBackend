@@ -10,7 +10,7 @@ router.route('/')
 .get(isAuthenticated, catchAsync(getMyReviews))
 
 router.route('/:id')
-.post(isAuthenticated, catchAsync(createReview))
+.post(isAuthenticated,restrictTo("user"), catchAsync(createReview))
 .delete(isAuthenticated, catchAsync(deleteReview))
 
 module.exports = router
