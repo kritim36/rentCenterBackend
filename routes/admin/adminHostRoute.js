@@ -9,4 +9,6 @@ router.route('/pendingApproval')
 .get(isAuthenticated, restrictTo("admin"), catchAsync(getPendingApproval))
 
 router.route('/approve/:id')
-patch(isAuthenticated, restrictTo("admin"), catchAsync(approveVehicle))
+.get(isAuthenticated, restrictTo("admin"), catchAsync(approveVehicle))
+
+module.exports = router

@@ -17,6 +17,8 @@ const profileRoute = require("./routes/user/profileRoute")
 const cartRoute = require("./routes/user/cartRoute")
 const orderRoute = require("./routes/user/orderRoute")
 const paymentRoute = require("./routes/user/paymentRoute")
+const renterRoute = require("./routes/user/renterRoute")
+const adminHostRoute = require("./routes/admin/adminHostRoute")
 
 app.use(cors({
     origin : '*'
@@ -52,6 +54,8 @@ app.use("/api/profile", profileRoute)
 app.use("/api/cart", cartRoute)
 app.use("/api/orders", orderRoute)
 app.use("/api/payment",paymentRoute)
+app.use("/api/renter",renterRoute)
+app.use("/api/admin/renter",adminHostRoute)
 
 
 

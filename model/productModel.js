@@ -4,12 +4,14 @@ const Schema = mongoose.Schema
 const productSchema = new Schema({
     productBrand : {
         type : String,
-        enum : ["Vivo","Samsung","Dell","HP","Canon","Nikon","Mercedes","Toyota","Honda","Hero"]
+        enum : ["Vivo","Samsung","Dell","HP","Canon","Nikon","Mercedes","Toyota","Honda","Hero"],
+        required : true
 
     },
     productCategory : {
         type : String,
-        enum : ["Mobile","Laptop","Camera","Cars","Bike"]
+        enum : ["Mobile","Laptop","Camera","Cars","Bike"],
+        required : true
     },
     productName : {
         type : String,
