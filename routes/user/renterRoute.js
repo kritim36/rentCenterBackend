@@ -20,10 +20,3 @@ router.route('/host')
 module.exports = router
 
 // upload.single('itemImage'), upload.single('itemInsuranceImage'), upload.single('itemBluebookImage')
-// upload.single('productImage')
-
-// upload.fields([{
-//     name: 'video', maxCount: 1
-//   }, {
-//     name: 'subtitles', maxCount: 1
-//   }]), function(req, res, next){

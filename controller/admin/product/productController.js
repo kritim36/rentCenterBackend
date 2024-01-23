@@ -1,6 +1,7 @@
 const Order = require("../../../model/orderSchema")
 const Product = require("../../../model/productModel")
 const fs = require("fs")
+const Renter = require("../../../model/renterModel")
 
 exports.createProduct = async (req,res)=>{
     const file = req.file
@@ -186,3 +187,20 @@ exports.getOrdersOfAProduct = async(req,res)=>{
         data : orders
     })
 }
+
+
+
+
+exports.getApprovedrenters = async(req,res)=>{
+    const approveRenter = await Renter.find({approved : true})
+    if(!approveRenter){
+        return res.status(400).json({
+            message : "No approveRenter"
+        })
+    }
+    res.status(200).json({
+        message : "Renter product fetched",
+    })
+}
+
+  
