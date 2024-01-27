@@ -56,6 +56,10 @@ exports.approveVehicle = async(req,res)=>{
         approved
     },{new:true})
 
+    // Approve the vehicle
+    approvedVehicle.approved = true
+    await approvedVehicle.save()
+
     res.status(200).json({
         message : "Product approved Sucessfully",
         data : approvedVehicle

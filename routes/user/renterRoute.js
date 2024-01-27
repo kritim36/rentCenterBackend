@@ -1,4 +1,4 @@
-const { hostitem } = require("../../controller/user/renterController")
+const { hostitem, getItems, updateItemAvailable, deleteItem } = require("../../controller/user/renterController")
 const {multer,storage} = require("../../middleware/multerConfig")
 const isAuthenticated = require("../../middleware/isAuthenticated")
 const catchAsync = require("../../services/catchAsync")
@@ -16,6 +16,14 @@ router.route('/host')
         name: 'itemBluebookImage', maxCount: 1
     }]),
       catchAsync(hostitem))
+
+.get(isAuthenticated,catchAsync(getItems))
+
+router.route('/host/status/:id')
+.patch(isAuthenticated,catchAsync(updateItemAvailable))
+
+router.route('/host/:id')
+.delete(isAuthenticated,catchAsync(deleteItem))
 
 module.exports = router
 

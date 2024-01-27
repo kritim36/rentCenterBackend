@@ -38,7 +38,7 @@ const renterSchema = new Schema({
         enum : ["petrol","disel","electric","hybrid"],
         required : true
     },
-    itemAvailabl : {
+    itemAvailable : {
         type : String,
         enum : ["available", "unavailable"],
         required : true
@@ -47,10 +47,10 @@ const renterSchema = new Schema({
         type : String,
         required : true
     },
-    itemInsurancedate :{
-        type : Date,
-        required :true
-    },
+    // itemInsurancedate :{
+    //     type : Date,
+    //     required :true
+    // },
     itemImage : {
         type : String,
         required : true
