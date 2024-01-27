@@ -29,9 +29,27 @@ const renterSchema = new Schema({
         required : true,
         unique : true
     },
+    itemModelNumber : {
+        type : Number,
+        required : true
+    },
+    itemFuelType : {
+        type : String,
+        enum : ["petrol","disel","electric","hybrid"],
+        required : true
+    },
     itemAvailabl : {
         type : String,
-        enum : ["available", "unavailable"]
+        enum : ["available", "unavailable"],
+        required : true
+    },
+    itemGuideline : {
+        type : String,
+        required : true
+    },
+    itemInsurancedate :{
+        type : Date,
+        required :true
     },
     itemImage : {
         type : String,
@@ -57,9 +75,11 @@ const renterSchema = new Schema({
     approved : {
         type : Boolean,
         default : false        
-    }
+    },
 
 })
 
 const Renter = mongoose.model("Renter", renterSchema)
 module.exports = Renter
+
+
