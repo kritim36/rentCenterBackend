@@ -10,8 +10,8 @@ router.route("/orders")
 router.route("/orders/paymentstatus/:id")
 .patch(isAuthenticated,restrictTo("admin"),catchAsync(updatePaymentStatus))
 router.route("/orders/:id")
-.patch(isAuthenticated,restrictTo("admin"), catchAsync(updateOrderStatus))
 .get(isAuthenticated,restrictTo("admin"), catchAsync(getSingleOrder))
+.patch(isAuthenticated,restrictTo("admin"), catchAsync(updateOrderStatus))
 .delete(isAuthenticated,restrictTo("admin"), catchAsync(deleteOrder))
 
 module.exports = router
