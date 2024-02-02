@@ -4,7 +4,7 @@ exports.getAllOrders = async(req,res)=>{
     const orders = await Order.find().populate({
         path : "items.product",
         model : "Product"
-    })
+    }).populate('user')
     if(orders.length == 0 ){
         return res.status(404).json({
             message : "No orders",

@@ -180,8 +180,7 @@ exports.getOrdersOfAProduct = async(req,res)=>{
         })
     }
     const orders = await Order.find({'items.product' : productId})
-    console.log(orders)
-
+    
     res.status(200).json({
         message : "Product ORdres fetched",
         data : orders
