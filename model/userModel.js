@@ -29,12 +29,12 @@ const userSchema = new Schema({
     },
     otp : {
         type : Number,
-        select : false
+        // select : false
     },
     isOtpVerified : {
         type : Boolean,
-        default : false,
-        select : false
+        // default : false,
+        // select : false
     },
     cart : [{
         quantity : {

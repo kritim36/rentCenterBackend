@@ -47,7 +47,8 @@ exports.loginUser = async(req,res)=>{
             message : "User with that email is not registered"
         })
     }
-    const isMatched = bcrypt.compareSync(password, userFound[0].userPassword)
+    const isMatched = bcrypt.compare(password, userFound[0].userPassword)
+    console.log(isMatched)
     if(isMatched){
         //generate token
         const token = jwt.sign({id : userFound[0]._id},process.env.SECRET_KEY,{
@@ -65,35 +66,35 @@ exports.loginUser = async(req,res)=>{
     }
 }
 
-exports.forgetPassword = async(req,res)=>{
-    const{email} = req.body
-    if(!email){
-     return   res.status(400).json({
-            message : "Please provide email"
-        })
-    }
-    const userExist = await User.find({userEmail : email})
-    if(userExist.length == 0){
-        return res.status(400).json({
-            message : "User with that email is not registered"
-        })
-    }
+// exports.forgetPassword = async(req,res)=>{
+//     const{email} = req.body
+//     if(!email){
+//         res.status(400).json({
+//             message : "Please provide email"
+//         })
+//     }
+//     const userExist = await User.find({userEmail : email})
+//     if(userExist.length == 0){
+//          res.status(400).json({
+//             message : "User with that email is not registered"
+//         })
+//     }
 
-    //send otp to that email
-    const otp = Math.floor(1000 + Math.random() * 9000);
-    userExist[0].otp = otp 
-    await userExist[0].save()
-   await sendEmail({
-        email :email,
-        subject : "Your Otp for rentCenter forgotPassword",
-        message : `Your otp is ${otp} . Dont share with anyone`
-    })
-    res.status(200).json({
-        message : "OTP sent successfully",
-        data : email
-    })
+//     //send otp to that email
+//     const otp = Math.floor(1000 + Math.random() * 9000);
+//     userExist[0].otp = otp 
+//     await userExist[0].save()
+//    await sendEmail({
+//         email :email,
+//         subject : "Your Otp for rentCenter forgotPassword",
+//         message : `Your otp is ${otp} . Dont share with anyone`
+//     })
+//     res.status(200).json({
+//         message : "OTP sent successfully",
+//         data : email
+//     })
   
-}
+// }
 
 exports.verifyOtp = async (req,res)=>{
     const{email,otp} = req.body
@@ -103,21 +104,28 @@ exports.verifyOtp = async (req,res)=>{
         })
     }
 
-    const userExist = await User.find({userEmail : email}).select("+otp +isOtpVerified")
+    const userExist = await User.find({userEmail : email})
     if(userExist.length == 0){
         return res.status(400).json({
             message : "Email is not registered"
         })
     }
-    if(userExist[0].otp !== otp*1){
+    console.log(userExist[0].otp)
+    if(userExist[0].otp != otp){
          res.status(400).json({
             message : "Invalid otp"
         })
     }else{
         //dispost the otp so cannot be used for the next time the same otp
-        userExist[0].otp = undefined
+        // userExist[0].otp = undefined
         userExist[0].isOtpVerified = true
-        await userExist[0].save()
+        // await userExist[0].save()
+        await User.updateOne({userEmail: email},
+            {
+                $set:{
+                    isOtpVerified:true
+                }
+            })
         res.status(200).json({
             message : "Otp is correct"
         })
@@ -131,28 +139,28 @@ exports.resetPassword = async (req,res)=>{
             message : "Please provide email,newPassword,confirmPassword"
         })
     }
-    if(newPassword !== confirmPassword){
+    if(newPassword != confirmPassword){
        return res.status(400).json({
             message : "newPassword and confirmPassword doesnot match"
         })
     }
 
-    const userExist = await User.find({userEmail : email}).select("+isOtpVerified")
+    const userExist = await User.find({userEmail : email})
     if(userExist.length == 0){
         return res.status(400).json({
             message : "Email is not registered"
         })
     }
 
-    if(userExist[0].isOtpVerified !== true){
+    if(userExist[0].isOtpVerified != true){
         return res.status(403).json({
             message : "You cannot perform this action"
         })
     }
 
-    userExist[0].userPassword= bcrypt.hashSync(newPassword,10)
-    userExist[0].isOtpVerified = false;
-    await userExist[0].save()
+    // userExist[0].userPassword= bcrypt.hashSync(newPassword,10)
+    // userExist[0].isOtpVerified = false;
+    // await userExist[0].save()
 
     res.status(200).json({
         message : "Password changed successfully"

@@ -5,6 +5,7 @@ const Renter = require("../../../model/renterModel")
 
 exports.createProduct = async (req,res)=>{
     const file = req.file
+    const id= req._id;
     let filePath
     if(!file){
         filePath = "https://hips.hearstapps.com/hmg-prod/images/dw-burnett-pcoty22-8260-1671143390.jpg?crop=0.668xw:1.00xh;0.184xw,0&resize=640:*"
@@ -19,6 +20,7 @@ exports.createProduct = async (req,res)=>{
     }
 
     const productCreated = await Product.create({
+        productOwner:id,
         productBrand,
         productCategory,
         productName,
@@ -201,5 +203,6 @@ exports.getApprovedrenters = async(req,res)=>{
         message : "Renter product fetched",
     })
 }
+
 
   

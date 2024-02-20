@@ -12,6 +12,8 @@ router.route("/")
 .post(isAuthenticated, restrictTo("admin"), upload.single('productImage'), catchAsync(createProduct))
 .get(catchAsync(getProducts))
 
+
+
 router.route("/productOrders/:id")
 .get(isAuthenticated,restrictTo("admin"),catchAsync(getOrdersOfAProduct))
 router.route("/status/:id")

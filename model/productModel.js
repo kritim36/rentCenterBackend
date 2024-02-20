@@ -2,6 +2,10 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const productSchema = new Schema({
+    productOwner : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Renter"
+    },
     productBrand : {
         type : String,
         enum : ["Vivo","Samsung","Dell","HP","Canon","Nikon","Mercedes","Toyota","Honda","Hero"],

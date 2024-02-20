@@ -1,26 +1,22 @@
 const Product = require("../../model/productModel")
 const Review = require("../../model/reviewModel")
+const Rent = require('../../model/renterModel')
 
 
 exports.getProducts = async(req,res)=>{
- 
-    // const products = await Product.find().populate({
-    //     path : "reviews",
-    //     populate :  {
-    //         path : "userId",
-    //         select : "userName userEmail"
-    //     }
-    // })
     const products = await Product.find()
+const approvedProduct= await Rent.find({approved:true})
+
     if(products.length == 0 ){
         res.status(400).json({
             message : "No product Found",
-           data : []
+           data : [],
+           data2 : []
         })
     }else{
         res.status(200).json({
             message : "Products Fetched Successfully",
-            data : products  
+            data : {products , approvedProduct}
         })
     }
    
