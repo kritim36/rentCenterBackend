@@ -33,11 +33,11 @@ const renterSchema = new Schema({
         type : Number,
         required : true
     },
-    itemFuelType : {
-        type : String,
-        enum : ["petrol","disel","electric","hybrid"],
-        required : true
-    },
+    // itemFuelType : {
+    //     type : String,
+    //     enum : ["petrol","disel","electric","hybrid"],
+    //     required : true
+    // },
     itemAvailable : {
         type : String,
         enum : ["available", "unavailable"],

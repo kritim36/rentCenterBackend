@@ -10,15 +10,26 @@ const approvedProduct= await Rent.find({approved:true})
     if(products.length == 0 ){
         res.status(400).json({
             message : "No product Found",
-           data : [],
-           data2 : []
+           data : []
         })
     }else{
+        approvedProduct.forEach((approved_product) => {
+            products.push(approved_product)
+        })
+        
         res.status(200).json({
             message : "Products Fetched Successfully",
-            data : {products , approvedProduct}
+            data : products
         })
     }
+    
+    // else{
+    //     res.status(200).json({
+    //         message : "Products Fetched Successfully",
+    //         data : products , 
+    //         data2 : approvedProduct
+    //     })
+    // }
    
 }
 
