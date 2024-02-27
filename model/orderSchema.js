@@ -25,6 +25,11 @@ const orderSchema = new Schema ({
         type : String,
         required : true
     },
+   
+    phoneNumber : {
+        type : Number,
+        required : true
+    },
     orderStatus : {
         type : String,
         enum : ['pending', 'delivered', 'cancelled', 'ontheway'],
@@ -34,7 +39,7 @@ const orderSchema = new Schema ({
         pidx : {type : String},
        method : {
         type : String,
-        enum : ['COD', 'khalti']
+        enum : ['COD', 'Khalti']
        },
        status : {
         type : String,

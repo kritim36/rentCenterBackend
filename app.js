@@ -3,6 +3,7 @@ const { connectDatabase } = require("./database/database")
 const app = express()
 
 const {Server} = require("socket.io")
+const cors = require("cors")
 
 const cors = require("cors")
 
@@ -13,11 +14,18 @@ const authRoute = require("./routes/auth/authRoute")
 const productRoute = require("./routes/admin/productRoute")
 const adminUserRoute = require("./routes/admin/adminUsersRoute")
 const adminOrderRoute = require("./routes/admin/adminOrderRoute")
+const dataServiceRoute = require("./routes/admin/dataServiceRoute")
 const userReviewRoute = require("./routes/user/userReviewRoute")
 const profileRoute = require("./routes/user/profileRoute")
 const cartRoute = require("./routes/user/cartRoute")
 const orderRoute = require("./routes/user/orderRoute")
 const paymentRoute = require("./routes/user/paymentRoute")
+const renterRoute = require("./routes/user/renterRoute")
+const adminHostRoute = require("./routes/admin/adminHostRoute")
+
+app.use(cors({
+    origin : '*'
+}))
 
 // Routes end here 
 
@@ -31,9 +39,9 @@ connectDatabase(process.env.MONGO_URI)
 app.use(express.json())
 app.use(express.urlencoded ({extended : true}))
 
-app.get('/chat',(req,res)=>{
-    res.render("home.ejs")
-})
+// app.get('/chat',(req,res)=>{
+//     res.render("home.ejs")
+// })
 
 // telling nodejs to give access to uploads folder 
 app.use(express.static("./uploads"))
@@ -49,11 +57,14 @@ app.use("/api/auth", authRoute)
 app.use("/api/product",productRoute)
 app.use("/api/admin", adminUserRoute)
 app.use("/api/admin", adminOrderRoute)
+app.use("/api/admin",dataServiceRoute)
 app.use("/api/reviews", userReviewRoute)
 app.use("/api/profile", profileRoute)
 app.use("/api/cart", cartRoute)
 app.use("/api/orders", orderRoute)
 app.use("/api/payment",paymentRoute)
+app.use("/api/renter",renterRoute)
+app.use("/api/admin/renter",adminHostRoute)
 
 
 

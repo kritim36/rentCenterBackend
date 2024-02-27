@@ -1,11 +1,12 @@
 const Order = require("../../../model/orderSchema")
+const User = require("../../../model/userModel")
 
 exports.createOrder = async(req,res)=>{
     const userId = req.user.id 
-    const {shippingAddress,items,totalAmount,paymentDetails} = req.body 
-    if(!shippingAddress || !items.length > 0 || !totalAmount || !paymentDetails ){
+    const {shippingAddress,items,totalAmount,paymentDetails,phoneNumber} = req.body 
+    if(!shippingAddress || !items.length > 0 || !totalAmount || !paymentDetails || !phoneNumber ){
         return res.status(400).json({
-            message : "Please provide shippingAddress,items,totalAmount,paymentDetails"
+            message : "Please provide shippingAddress,items,totalAmount,paymentDetails, phoneNumber"
         })
     }
 
@@ -14,9 +15,12 @@ exports.createOrder = async(req,res)=>{
         items,
         totalAmount,
         shippingAddress,
-        paymentDetails
+        paymentDetails,
+        phoneNumber
     })
-
+    const user = await User.findById(userId)
+    user.cart = []
+    await user.save()
     res.status(200).json({
         message : "Order created sucessfully",
         data : createdOrder
@@ -91,9 +95,14 @@ exports.deleteMyOrder = async(req,res)=>{
             message : "No order with that id"
         })
     }
-    if(order.user !== userId){
+    if(order.user != userId){
         return res.status(400).json({
             message : "You don't have permission to delete this order"
+        })
+    }
+    if(order.orderStatus !=="pending"){
+        return res.status(400).json({
+            message : "You cannot delete this order as it is not pending"
         })
     }
 
@@ -116,7 +125,7 @@ exports.cancelOrder = async(req,res)=>{
             message : "No order with that id"
         })
     }
-    if(order.user !== userId){
+    if(order.user != userId){
        return res.status(400).json({
         message : "You don't have permission to delete this order"
        })
