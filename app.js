@@ -5,6 +5,8 @@ const app = express()
 const {Server} = require("socket.io")
 const cors = require("cors")
 
+const cors = require("cors")
+
 app.set('view engine','ejs')
 
 //routes
@@ -26,6 +28,11 @@ app.use(cors({
     origin : '*'
 }))
 
+// Routes end here 
+
+app.use(cors({
+    origin: '*'
+}))
 require('dotenv').config()
 //database connection
 connectDatabase(process.env.MONGO_URI)
