@@ -18,7 +18,8 @@ const rating_schema = new Schema(
             },
             rated : {type : Number}
           }],
-          total_rating : {type : Number}
+          total_rating : {type : Number},
+          category : String
        }
  )
 
