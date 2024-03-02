@@ -10,7 +10,7 @@ const router = require("express").Router()
 router.route('/pendingApproval')
 .get(isAuthenticated, restrictTo("admin"), catchAsync(getPendingApproval))
 
-router.route('/approve/:id')
+router.route('/pendingApproval/approve/:id')
 .patch(isAuthenticated, restrictTo("admin"), catchAsync(approveVehicle))
 
 // router.route('/setProducts')

@@ -2,68 +2,57 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const renterSchema = new Schema({
-    itemName : {
+    productName : {
         type : String,
         required : true
     },
-    itemBrand : {
+    productBrand : {
         type : String,
-        enum : ["Vivo","Samsung","Dell","HP","Canon","Nikon","Mercedes","Toyota","Honda","Hero"],
+        enum : ["Apple","Xiaomi","Vivo","Samsung","Dell","HP","Lenovo","Asus","L.G.","Sony","Canon","Nikon","Mercedes","Honda","Hero","BMW","BYD","Ford","Yamaha","Hyundai","Suzuki","Tata","Tyota"],
         required : true
     },
-    itemCategory : {
+    productCategory : {
         type : String,
-        enum : ["Mobile","Laptop","Camera","Cars","Bike"],
+        enum : ["Mobile","Laptop","Camera","Tv","Cars","Bike"]
+    },
+    productLocation : {
+        type : String,
         required : true
     },
-    itemLocation : {
-        type : String,
-        required : true
-    },
-    itemPrice : {
+    productPrice : {
         type : Number,
         required : true
     },
-    itemRegistrationNumber : {
+    productRegistrationNumber : {
         type : Number,
-        required : true,
         unique : true
     },
-    itemModelNumber : {
-        type : Number,
-        required : true
+    productModelNumber : {
+        type : Number
     },
-    // itemFuelType : {
-    //     type : String,
-    //     enum : ["petrol","disel","electric","hybrid"],
-    //     required : true
-    // },
-    itemAvailable : {
+    productFuelType : {
         type : String,
-        enum : ["available", "unavailable"],
-        required : true
+        enum : ["petrol","disel","electric","hybrid"]
     },
-    itemGuideline : {
+    availableDate: {
+        type : Date ,
+        Required : true  
+    },
+    productGuideline : {
         type : String,
         required : true
     },
-    // itemInsurancedate :{
-    //     type : Date,
-    //     required :true
-    // },
-    itemImage : {
+    productImage : {
         type : String,
         required : true
     },
-    itemInsuranceImage : {
-        type : String,
-        required : true
+    productInsuranceImage : {
+        type : String
     },
-    itemBluebookImage : {
-        type : String,
-        required : true
+    productBluebookImage : {
+        type : String
     },
-    itemInstructions : {
+    productDescription : {
         type : String,
         required : true
     },

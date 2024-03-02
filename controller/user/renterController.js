@@ -12,29 +12,28 @@ exports.hostitem = async(req,res)=>{
         filePath = req.file.filename
     }
     
-    const{itemName,itemBrand,itemCategory,itemLocation,itemPrice,itemRegistrationNumber, itemAvailable,itemInstructions, itemGuideline,itemFuelType,itemModelNumber} = req.body
-    if(!itemName || !itemBrand || !itemCategory || !itemLocation || !itemPrice || !itemRegistrationNumber || !itemAvailable || !itemInstructions  || !itemGuideline || !itemFuelType || !itemModelNumber){
+    const{productName,productBrand,productCategory,productLocation,productPrice,availableDate,productDescription, productGuideline,productRegistrationNumber,productFuelType,productModelNumber} = req.body
+    if(!productName || !productBrand || !productCategory || !productLocation || !productPrice || !availableDate || !productDescription  || !productGuideline ){
         return res.status(400).json({
-            message : "Please provide itemName,itemBrand,itemCategory,itemLocation,itemPrice,itemRegistrationNumber, itemAvailable, itemImage,itemInsuranceImage,itemBluebookImage,itemInstructions,itemFuelType,itemModelNumber,itemInsurancedate,itemGuideline"
+            message : "Please provide itemName,itemBrand,itemCategory,itemLocation,itemPrice, itemAvailable,itemInstructions,itemGuideline"
         })
     }
 
     const newHost = await Renter.create({
-        itemName,
-        itemBrand,
-        itemCategory,
-        itemLocation,
-        itemPrice,
-        itemRegistrationNumber,
-        itemAvailable, 
-        itemImage : process.env.BACKEND_URL + filePath,
-        itemInsuranceImage : process.env.BACKEND_URL + filePath,
-        itemBluebookImage : process.env.BACKEND_URL + filePath,
-        itemInstructions,
-        // itemInsurancedate,
-        itemGuideline,
-        itemFuelType,
-        itemModelNumber,
+        productName,
+        productBrand,
+        productCategory,
+        productLocation,
+        productPrice,
+        productRegistrationNumber,
+        availableDate, 
+        productImage : process.env.BACKEND_URL + filePath,
+        productInsuranceImage : process.env.BACKEND_URL + filePath,
+        productBluebookImage : process.env.BACKEND_URL + filePath,
+        productDescription,
+        productGuideline,
+        productFuelType,
+        productModelNumber,
         hostedBy : userId,
         
       })

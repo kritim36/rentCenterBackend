@@ -60,7 +60,7 @@ function recommendProducts(user, ratingsData) {
 
 router.post("/create_rating/:id",isAuthenticated, async (req ,res) => {
 // res.json({msg :req.params.id})
-console.log(req.body)
+//console.log(req.body)
 const user = req.user._id
 const item_id = req.params.id
 const {rate , category} = req.body
@@ -151,7 +151,7 @@ product_lists.forEach((product) => {
     })
 })
 
-console.log("the new filtered lists is " , ratings)
+//console.log("the new filtered lists is " , ratings)
 
 return ratings
 }
@@ -159,7 +159,7 @@ return ratings
 router.get("/get_rating/:id", async (req ,res) =>{
     const id  = req.params.id
     let product_category
-    console.log("the id is " , id )
+   // console.log("the id is " , id )
     const product = await Rating.findOne({productId : id})
 
     if(product == null ){
@@ -173,7 +173,7 @@ router.get("/get_rating/:id", async (req ,res) =>{
       const product_rating_lists  =   create_product_rating_list(product_according_to_category)
       const recommended_rating = recommendProducts(id , product_rating_lists)
 
-      console.log("the recommended list is " , recommended_rating)
+      //console.log("the recommended list is " , recommended_rating)
 
     
     let re = await Promise.all(recommended_rating.map(async (product) => {
@@ -181,7 +181,7 @@ router.get("/get_rating/:id", async (req ,res) =>{
         return await ProductModel.findOne({ _id: product.product });
     }));
     
-    console.log(re);
+    //console.log(re);
 
 
 
