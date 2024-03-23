@@ -1,10 +1,10 @@
-const Renter = require("../../model/renterModel")
+const Host = require("../../model/hostModel")
 
 
 
 
 exports.getPendingApproval = async(req,res)=>{
-    const pendingApprovals = await Renter.find({approved : false})
+    const pendingApprovals = await Host.find({approved : false})
     res.status(200).json({
         message : "pending approval",
         data : pendingApprovals
@@ -45,14 +45,14 @@ exports.approveVehicle = async(req,res)=>{
         })
     }
 
-    const host = await Renter.findById(id)
+    const host = await Host.findById(id)
     if(!host){
         return res.status(404).json({
             message : "No host product found"
         })
     }
 
-    const approvedVehicle = await Renter.findByIdAndUpdate(id,{
+    const approvedVehicle = await Host.findByIdAndUpdate(id,{
         approved
     },{new:true})
 

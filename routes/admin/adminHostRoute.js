@@ -13,30 +13,6 @@ router.route('/pendingApproval')
 router.route('/pendingApproval/approve/:id')
 .patch(isAuthenticated, restrictTo("admin"), catchAsync(approveVehicle))
 
-// router.route('/setProducts')
-// .get(isAuthenticated, restrictTo("admin"), async(req,res)=>{
-//     const id= req.user._id;
-//     const approveRenter = await Renter.find({approved : true})
-//     if(!approveRenter){
-//         return res.status(400).json({
-//             message : "No approveRenter"
-//         })
-//     }
-// const setdata= await Product.create({
-//     productOwner: id,
-//     productBrand: approveRenter. itemBrand,
-//     productCategory: approveRenter.itemCategory,
-//     productName: approveRenter.itemName,
-//     productDescription: approveRenter.itemInstructions,
-//     productStockQty:1,
-//     productPrice: approveRenter.itemPrice,
-//     productStatus : approveRenter.itemAvailable
-// })
 
-//     res.status(200).json({
-//         message : "Renter product fetched",
-//         data: setdata
-//     })
-// })
 
 module.exports = router

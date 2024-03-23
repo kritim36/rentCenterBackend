@@ -1,16 +1,20 @@
-const Renter = require("../../model/renterModel");
+const Host = require("../../model/hostModel");
 const fs = require("fs")
 
 exports.hostitem = async(req,res)=>{
     const userId = req.user.id
     const file = req.file
+   console.log("hyy",req.file)
    
     let filePath
     if(!file){
         filePath = "https://hips.hearstapps.com/hmg-prod/images/dw-burnett-pcoty22-8260-1671143390.jpg?crop=0.668xw:1.00xh;0.184xw,0&resize=640:*"
     }else{
         filePath = req.file.filename
+        console.log("file",filePath)
+        console.log("k", req.file.filePath)
     }
+
     
     const{productName,productBrand,productCategory,productLocation,productPrice,availableDate,productDescription, productGuideline,productRegistrationNumber,productFuelType,productModelNumber} = req.body
     if(!productName || !productBrand || !productCategory || !productLocation || !productPrice || !availableDate || !productDescription  || !productGuideline ){
@@ -18,14 +22,16 @@ exports.hostitem = async(req,res)=>{
             message : "Please provide itemName,itemBrand,itemCategory,itemLocation,itemPrice, itemAvailable,itemInstructions,itemGuideline"
         })
     }
+    console.log("hello" , req.body)
+    
 
-    const newHost = await Renter.create({
+    const newHost = await Host.create({
         productName,
         productBrand,
         productCategory,
         productLocation,
         productPrice,
-        productRegistrationNumber,
+        productRegistrationNumber : 20103100,
         availableDate, 
         productImage : process.env.BACKEND_URL + filePath,
         productInsuranceImage : process.env.BACKEND_URL + filePath,
@@ -48,7 +54,7 @@ exports.hostitem = async(req,res)=>{
 
 exports.getItems = async(req,res)=>{
  
-    const items = await Renter.find()
+    const items = await Host.find()
     if(items.length == 0 ){
         res.status(400).json({
             message : "No product Found",
@@ -69,14 +75,14 @@ exports.updateItemAvailable = async(req,res)=>{
     const {itemAvailable} = req.body 
     
 
-    const renter = await Renter.findById(id)
+    const renter = await Host.findById(id)
     if(!renter){
         return res.status(404).json({
             message : "No item found with that id"
         })
     }
     
-    const approveRenter = await Renter.findById(id,{approved : true})
+    const approveRenter = await Host.findById(id,{approved : true})
     if(!approveRenter){
         return res.status(400).json({
             message : "No approveRenter"
@@ -101,7 +107,7 @@ exports.updateItemAvailable = async(req,res)=>{
     //     })
     // }
   
-    const updatedItem = await Renter.findByIdAndUpdate(id,{
+    const updatedItem = await Host.findByIdAndUpdate(id,{
           itemAvailable
     },{new:true})
 
@@ -120,7 +126,7 @@ exports.deleteItem = async(req,res)=>{
             message : "No item found with that id"
         })
     }
-    const approveRenter = await Renter.findById(id,{approved : true})
+    const approveRenter = await Host.findById(id,{approved : true})
     if(!approveRenter){
         return res.status(400).json({
             message : "No approveRenter"
@@ -133,7 +139,7 @@ exports.deleteItem = async(req,res)=>{
         })
     }
 
-    const oldData = await Renter.findById(id)
+    const oldData = await Host.findById(id)
     if(!oldData){
         return res.status(404).json({
             message : "No data found with that id"
@@ -153,7 +159,7 @@ exports.deleteItem = async(req,res)=>{
                 }
             })
 
-    await Renter.findByIdAndDelete(id)
+    await Host.findByIdAndDelete(id)
     res.status(200).json({
         message : "Product deleted sucessfully",
         data : null

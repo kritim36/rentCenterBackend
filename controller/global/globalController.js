@@ -1,11 +1,11 @@
 const Product = require("../../model/productModel")
 const Review = require("../../model/reviewModel")
-const Rent = require('../../model/renterModel')
+const Host = require('../../model/hostModel')
 
 
 exports.getProducts = async(req,res)=>{
     const products = await Product.find()
-const approvedProduct= await Rent.find({approved:true})
+const approvedProduct= await Host.find({approved:true})
 
     if(products.length == 0 ){
         res.status(400).json({
